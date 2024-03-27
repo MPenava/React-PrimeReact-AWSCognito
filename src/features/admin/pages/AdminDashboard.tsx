@@ -95,26 +95,26 @@ const AdminDashboard = () => {
 
       <div className="flex flex-row justify-content-between">
         <div className="card flex p-4 gap-3 bg-gray-100 border-round-xl">
-          <div className="flex align-items-center w-9rem text-lg font-semibold">
+          <div className="flex align-items-center text-lg font-semibold">
             Completed questionaries
           </div>
-          <div className="flex justify-content-end w-9rem text-4xl font-bold text-blue-400">
+          <div className="flex justify-content-end text-4xl font-bold text-blue-400">
             145
           </div>
         </div>
         <div className="card flex p-4 gap-3 bg-gray-100 border-round-xl">
-          <div className="flex align-items-center w-9rem text-lg font-semibold">
+          <div className="flex align-items-center text-lg font-semibold">
             Not submited questionaries
           </div>
-          <div className="flex justify-content-end text-4xl font-bold w-9rem text-blue-400">
+          <div className="flex justify-content-end text-4xl font-bold text-blue-400">
             20
           </div>
         </div>
         <div className="card flex p-4 gap-3 bg-gray-100 border-round-xl">
-          <div className="flex align-items-center w-9rem text-lg font-semibold">
+          <div className="flex align-items-center text-lg font-semibold">
             Incomplete questionarires
           </div>
-          <div className="flex justify-content-end text-4xl font-bold w-9rem text-blue-400">
+          <div className="flex justify-content-end text-4xl font-bold text-blue-400">
             54
           </div>
         </div>
@@ -138,8 +138,8 @@ const AdminDashboard = () => {
               wrapper: { className: " border-round-sm" },
             }}
           >
-            <Column field="name" style={{ width: "60%" }}></Column>
-            <Column field="date" style={{ width: "30%" }}></Column>
+            <Column field="name" pt={{ root: { className: "w-7" } }}></Column>
+            <Column field="date" pt={{ root: { className: "w-4" } }}></Column>
             <Column body={viewIcon}></Column>
           </DataTable>
         </div>
@@ -163,9 +163,12 @@ const AdminDashboard = () => {
               wrapper: { className: "" },
             }}
           >
-            <Column field="name" style={{ width: "60%" }}></Column>
-            <Column field="date"></Column>
-            <Column body={tagMessage}></Column>
+            <Column field="name" pt={{ root: { className: "w-7" } }}></Column>
+            <Column field="date" pt={{ root: { className: "w-3" } }}></Column>
+            <Column
+              body={tagMessage}
+              pt={{ root: { className: "w-3" } }}
+            ></Column>
           </DataTable>
         </div>
       </div>
