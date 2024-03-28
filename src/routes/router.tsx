@@ -2,8 +2,10 @@ import { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import AdminDashboard from "../features/admin/pages/AdminDashboard";
+import Login from "../features/login/pages/Login";
 
 import { MainLayout } from "../layout";
+import { CenterLayout } from "../layout";
 
 export const routes = [
   {
@@ -13,6 +15,16 @@ export const routes = [
       {
         path: "",
         element: <AdminDashboard />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <CenterLayout />,
+    children: [
+      {
+        path: "",
+        element: <Login />,
       },
     ],
   },
