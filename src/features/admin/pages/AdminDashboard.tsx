@@ -50,11 +50,10 @@ const AdminDashboard = () => {
         icon={"pi pi-send"}
         severity="secondary"
         size={"small"}
-        className="p-button-sm p-button-text"
+        className="p-button-sm p-button-text p-0"
       ></Button>
     );
   };
-  console.log(viewIcon);
 
   const tagMessage = () => {
     return (
@@ -65,7 +64,7 @@ const AdminDashboard = () => {
         pt={{
           root: {
             className:
-              "bg-green-50 font-normal text-green-400 border-1 border-green-400",
+              "bg-green-50 font-normal text-green-400 border-1 border-green-400 p-1",
           },
         }}
       />
