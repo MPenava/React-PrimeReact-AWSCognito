@@ -133,10 +133,6 @@ const AdminDashboard = () => {
             stripedRows
             showGridlines
             showHeaders={false}
-            pt={{
-              root: { className: "w-full" },
-              wrapper: { className: " border-round-sm" },
-            }}
           >
             <Column field="name" pt={{ root: { className: "w-7" } }}></Column>
             <Column field="date" pt={{ root: { className: "w-4" } }}></Column>
@@ -158,10 +154,6 @@ const AdminDashboard = () => {
             stripedRows
             showGridlines
             showHeaders={false}
-            pt={{
-              root: { className: "w-full" },
-              wrapper: { className: "" },
-            }}
           >
             <Column field="name" pt={{ root: { className: "w-7" } }}></Column>
             <Column field="date" pt={{ root: { className: "w-3" } }}></Column>
