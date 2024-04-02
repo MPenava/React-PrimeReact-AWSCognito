@@ -4,6 +4,8 @@ import { Column } from "primereact/column";
 import { Question, Notes } from "../types";
 
 import { Tag } from "primereact/tag";
+import { Toast } from "primereact/toast";
+import { useRef } from "react";
 
 const AdminDashboard = () => {
   const questionaries: Question[] = [
@@ -64,11 +66,21 @@ const AdminDashboard = () => {
         pt={{
           root: {
             className:
-              "bg-green-50 font-normal text-green-400 border-1 border-green-400 p-1",
+              "bg-green-100 font-normal text-green-500 border-1 border-green-500 p-1",
           },
         }}
       />
     );
+  };
+
+  const toast = useRef(null);
+
+  const handleClickEvent = () => {
+    toast.current.show({
+      severity: "success",
+      summary: "Success",
+      detail: "Message Content",
+    });
   };
 
   return (
@@ -79,15 +91,23 @@ const AdminDashboard = () => {
           <div className="font-bold text-3xl">Dashboard</div>
         </div>
         <div className="flex gap-3">
+          <Toast
+            ref={toast}
+            pt={{
+              closeButton: { className: "text-white border-1" },
+            }}
+          />
           <Button
             icon="pi pi-plus"
             label="New questionare"
             severity="secondary"
+            onClick={handleClickEvent}
           ></Button>
           <Button
             icon="pi pi-plus"
             label="New script"
             severity="secondary"
+            onClick={handleClickEvent}
           ></Button>
         </div>
       </div>
