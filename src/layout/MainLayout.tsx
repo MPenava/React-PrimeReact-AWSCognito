@@ -5,7 +5,7 @@ import mainitobaBackground from "../assets/manitoba_background.png";
 const MainLayout = () => {
   return (
     <div
-      className="flex flex-column h-screen w-full"
+      className="flex flex-column h-screen w-screen"
       style={{
         background: `url(${mainitobaBackground})`,
         objectFit: "cover",

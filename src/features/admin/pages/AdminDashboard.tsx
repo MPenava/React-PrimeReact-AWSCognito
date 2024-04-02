@@ -72,7 +72,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="flex flex-column p-5 gap-5">
+    <div className="flex flex-column gap-5">
       <div className="flex flex-row align-items-center justify-content-between w-full">
         <div className="flex gap-3">
           <i className="pi pi-th-large flex align-items-center text-2xl"></i>

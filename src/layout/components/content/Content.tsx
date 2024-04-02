@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 const Content = () => {
   return (
-    <div className="shadow-5 h-full w-full bg-white border-round-xl">
+    <div className="shadow-5 h-full w-full overflow-auto bg-white border-round-xl px-5 pt-5">
       <Outlet />
     </div>
   );

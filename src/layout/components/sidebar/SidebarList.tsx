@@ -8,7 +8,7 @@ const SidebarList = () => {
       <Menu
         model={listItems}
         pt={{
-          root: { className: "bg-transparent border-none h-30rem" },
+          root: { className: "bg-transparent border-none" },
           action: {
             className: "focus:bg-gray-800 hover:bg-gray-800 border-round-sm",
           },
