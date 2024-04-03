@@ -2,11 +2,11 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 
-const Login = () => {
+const Register = () => {
   return (
     <div className="flex flex-column w-23rem p-4 gap-4 bg-white border-round-lg shadow-5">
       <div className="flex justify-content-center text-4xl font-normal">
-        Log in
+        Sign up
       </div>
       <div className="flex flex-column gap-5">
         <div className="flex flex-column gap-5">
@@ -53,4 +53,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

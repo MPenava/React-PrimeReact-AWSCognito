@@ -3,6 +3,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import AdminDashboard from "../features/admin/pages/AdminDashboard";
 import Login from "../features/auth/pages/Login";
+import AccessCode from "../features/auth/pages/AccessCode";
+import Register from "../features/auth/pages/Register";
 
 import { MainLayout } from "../layout";
 import { CenterLayout } from "../layout";
@@ -15,6 +17,26 @@ export const routes = [
       {
         path: "",
         element: <Login />,
+      },
+    ],
+  },
+  {
+    path: "/access-code",
+    element: <CenterLayout />,
+    children: [
+      {
+        path: "",
+        element: <AccessCode />,
+      },
+    ],
+  },
+  {
+    path: "/registration",
+    element: <CenterLayout />,
+    children: [
+      {
+        path: "",
+        element: <Register />,
       },
     ],
   },
