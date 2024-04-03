@@ -1,7 +1,7 @@
 import { Image } from "primereact/image";
 import imageSrc from "../assets/manitoba_logo.png";
 import mainitobaBackground from "../assets/manitoba_background.png";
-import { LoginContent } from "./components/login-content";
+import { AuthContent } from "./components/content";
 
 const CenterLayout = () => {
   return (
@@ -25,7 +25,7 @@ const CenterLayout = () => {
         </div>
       </div>
       <div className="w-full">
-        <LoginContent />
+        <AuthContent />
       </div>
     </div>
   );

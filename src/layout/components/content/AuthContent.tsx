@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-const LoginContent = () => {
+const AuthContent = () => {
   return (
     <div className="flex flex-row justify-content-center">
       <Outlet />
@@ -7,4 +7,4 @@ const LoginContent = () => {
   );
 };
 
-export { LoginContent };
+export { AuthContent };

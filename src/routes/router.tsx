@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import AdminDashboard from "../features/admin/pages/AdminDashboard";
-import Login from "../features/login/pages/Login";
+import Login from "../features/auth/pages/Login";
 
 import { MainLayout } from "../layout";
 import { CenterLayout } from "../layout";
