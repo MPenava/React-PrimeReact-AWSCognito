@@ -73,10 +73,10 @@ const AdminDashboard = () => {
     );
   };
 
-  const toast = useRef(null);
+  const toast = useRef<Toast>(null);
 
   const handleClickEvent = () => {
-    toast.current.show({
+    toast.current?.show({
       severity: "success",
       summary: "Success",
       detail: "Message Content",

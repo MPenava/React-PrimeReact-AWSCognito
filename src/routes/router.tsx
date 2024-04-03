@@ -10,21 +10,21 @@ import { CenterLayout } from "../layout";
 export const routes = [
   {
     path: "/",
-    element: <MainLayout />,
-    children: [
-      {
-        path: "",
-        element: <AdminDashboard />,
-      },
-    ],
-  },
-  {
-    path: "/login",
     element: <CenterLayout />,
     children: [
       {
         path: "",
         element: <Login />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "",
+        element: <AdminDashboard />,
       },
     ],
   },

@@ -14,19 +14,26 @@ const Login = () => {
             <label className="text-sm">Email</label>
             <span className="p-input-icon-left">
               <i className="pi pi-envelope" />
-              <InputText placeholder="Email" />
+              <InputText
+                placeholder="Email"
+                pt={{
+                  root: { className: "w-full" },
+                }}
+              />
             </span>
             <small>Enter your email.</small>
           </div>
-          <div className="flex flex-column">
+          <div className="flex flex-column w-full">
             <label className="text-sm">Password</label>
             <span className="p-input-icon-left w-full">
-              <i className="pi pi-lock" />
               <Password
+                placeholder="Password"
                 pt={{
-                  input: { className: "p-2" },
+                  root: { className: "w-full" },
+                  input: { className: "w-full pl-5" },
                 }}
               />
+              <i className="pi pi-lock" />
             </span>
             <small>Enter your password.</small>
           </div>
