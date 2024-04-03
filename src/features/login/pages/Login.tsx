@@ -1,8 +1,34 @@
+import authenticate from "../../../helpers/authenticate";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 
+import { useState } from "react";
+
+type TAuthType = {
+  email: string;
+  password: string;
+};
+
 const Login = () => {
+  const [auth, setAuth] = useState<TAuthType>({ email: "", password: "" });
+
+  const getData = (e: any) => {
+    const { value, name } = e.target;
+    setAuth(() => {
+      return {
+        ...auth,
+        [name]: value,
+      };
+    });
+  };
+
+  const login = (email: string, password: string) => {
+    authenticate(email, password).then((data) => {
+      console.log("SUCCESS");
+      console.log(data);
+    });
+  };
   return (
     <div className="flex flex-column w-23rem p-4 gap-4 bg-white border-round-lg shadow-5">
       <div className="flex justify-content-center text-4xl font-normal">
@@ -19,6 +45,7 @@ const Login = () => {
                 pt={{
                   root: { className: "w-full" },
                 }}
+                value={auth.email}
               />
             </span>
             <small>Enter your email.</small>
@@ -32,6 +59,7 @@ const Login = () => {
                   root: { className: "w-full" },
                   input: { className: "w-full pl-5" },
                 }}
+                value={auth.password}
               />
               <i className="pi pi-lock" />
             </span>
