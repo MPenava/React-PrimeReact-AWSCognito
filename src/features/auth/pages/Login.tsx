@@ -3,6 +3,7 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { useState } from "react";
 import { TAuthType } from "../types";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [auth, setAuth] = useState<TAuthType>({ email: "", password: "" });
@@ -68,8 +69,14 @@ const Login = () => {
               root: { className: "p-2 w-full bg-gray-600 border-round-sm" },
             }}
           ></Button>
-          <div className="flex justify-content-center px-4 py-2 font-semibold">
-            Forgot password
+          <div className="flex justify-content-center px-4 py-2 font-normal text-sm">
+            Not a member?&nbsp;
+            <Link
+              to="/registration"
+              className="text-blue-500 no-underline text-sm font-medium"
+            >
+              Signup now
+            </Link>
           </div>
         </div>
       </div>

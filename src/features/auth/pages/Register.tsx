@@ -66,16 +66,13 @@ const Register = () => {
         </div>
         <div className="flex flex-column gap-2">
           <Button
-            label="Log in"
+            label="Continue"
             severity="secondary"
             pt={{
               root: { className: "p-2 w-full bg-gray-600 border-round-sm" },
             }}
             onClick={register}
           ></Button>
-          <div className="flex justify-content-center px-4 py-2 font-semibold">
-            Forgot password
-          </div>
         </div>
       </div>
     </div>
