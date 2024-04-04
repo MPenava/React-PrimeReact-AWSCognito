@@ -5,6 +5,7 @@ import AdminDashboard from "../features/admin/pages/AdminDashboard";
 import Login from "../features/auth/pages/Login";
 import AccessCode from "../features/auth/pages/AccessCode";
 import Register from "../features/auth/pages/Register";
+import PatientChat from "../features/chat/pages/PatientChat";
 
 import { MainLayout } from "../layout";
 import { CenterLayout } from "../layout";
@@ -47,6 +48,16 @@ export const routes = [
       {
         path: "",
         element: <AdminDashboard />,
+      },
+    ],
+  },
+  {
+    path: "/chat",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "",
+        element: <PatientChat />,
       },
     ],
   },
