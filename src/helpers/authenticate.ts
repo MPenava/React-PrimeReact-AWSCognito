@@ -2,6 +2,7 @@ import {
   AuthenticationDetails,
   CognitoUserPool,
   CognitoUser,
+  CognitoUserAttribute,
 } from "amazon-cognito-identity-js";
 
 const poolData = {
@@ -11,7 +12,7 @@ const poolData = {
 
 const userpool = new CognitoUserPool(poolData);
 
-const authenticate = (email: string, password: string) => {
+export const authenticate = (email: string, password: string) => {
   return new Promise((resolve, reject) => {
     const user = new CognitoUser({
       Username: email,
@@ -34,4 +35,42 @@ const authenticate = (email: string, password: string) => {
   });
 };
 
-export default authenticate;
+export const register = (
+  username: string,
+  email: string,
+  password: string,
+  phone: string
+) => {
+  return new Promise((resolve, reject) => {
+    const attributeList = [];
+
+    const attributeEmail = new CognitoUserAttribute({
+      Name: "email",
+      Value: email,
+    });
+
+    const attributePhone = new CognitoUserAttribute({
+      Name: "phone_number",
+      Value: phone,
+    });
+
+    attributeList.push(attributeEmail);
+    attributeList.push(attributePhone);
+
+    userpool.signUp(username, password, attributeList, [], (err, result) => {
+      if (err) {
+        reject(err.message || JSON.stringify(err));
+      } else {
+        if (result) {
+          const cognitoUser = result.user;
+          resolve(
+            "User signed up successfully. Username: " +
+              cognitoUser.getUsername()
+          );
+        } else {
+          reject("User sign up result is undefined.");
+        }
+      }
+    });
+  });
+};

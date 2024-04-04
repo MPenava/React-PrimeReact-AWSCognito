@@ -1,12 +1,16 @@
-import authenticate from "../../../helpers/authenticate";
+import { register } from "helpers";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { useState } from "react";
-import { TAuthType } from "../types";
+import { TAuthRegisterType } from "../types";
 
 const Register = () => {
-  const [auth, setAuth] = useState<TAuthType>({ email: "", password: "" });
+  const [auth, setAuth] = useState<TAuthRegisterType>({
+    email: "",
+    password: "",
+    phone: "",
+  });
 
   const getData = (e: any) => {
     const { value, name } = e.target;
@@ -18,8 +22,9 @@ const Register = () => {
     });
   };
 
-  const register = () => {
-    authenticate(auth.email, auth.password).then((data) => {
+  const handleRegisterForm = async () => {
+    const username = auth.email.split("@")[0];
+    register(username, auth.email, auth.password, auth.phone).then((data) => {
       console.log("SUCCESS");
       console.log(data);
     });
@@ -63,6 +68,21 @@ const Register = () => {
               <i className="pi pi-lock" />
             </span>
           </div>
+          <div className="flex flex-column gap-2">
+            <label className="text-sm">Phone</label>
+            <span className="p-input-icon-left">
+              <i className="pi pi-phone" />
+              <InputText
+                placeholder="Phone"
+                name="phone"
+                value={auth.phone}
+                onChange={(e) => getData(e)}
+                pt={{
+                  root: { className: "w-full" },
+                }}
+              />
+            </span>
+          </div>
         </div>
         <div className="flex flex-column gap-2">
           <Button
@@ -71,7 +91,7 @@ const Register = () => {
             pt={{
               root: { className: "p-2 w-full bg-gray-600 border-round-sm" },
             }}
-            onClick={register}
+            onClick={handleRegisterForm}
           ></Button>
         </div>
       </div>

@@ -3,4 +3,10 @@ type TAuthType = {
   password: string;
 };
 
-export { type TAuthType };
+type TAuthRegisterType = {
+  email: string;
+  password: string;
+  phone: string;
+};
+
+export { type TAuthType, type TAuthRegisterType };
