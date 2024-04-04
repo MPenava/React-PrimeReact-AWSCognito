@@ -1,15 +1,8 @@
-import authenticate from "../../../helpers/authenticate";
-
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
-
 import { useState } from "react";
-
-type TAuthType = {
-  email: string;
-  password: string;
-};
+import { TAuthType } from "../types";
 
 const Login = () => {
   const [auth, setAuth] = useState<TAuthType>({ email: "", password: "" });
@@ -24,11 +17,8 @@ const Login = () => {
     });
   };
 
-  const login = (email: string, password: string) => {
-    authenticate(email, password).then((data) => {
-      console.log("SUCCESS");
-      console.log(data);
-    });
+  const login = () => {
+    console.log(auth);
   };
   return (
     <div className="flex flex-column w-23rem p-4 gap-4 bg-white border-round-lg shadow-5">
@@ -43,7 +33,9 @@ const Login = () => {
               <i className="pi pi-envelope" />
               <InputText
                 placeholder="Email"
+                name="email"
                 value={auth.email}
+                onChange={(e) => getData(e)}
                 pt={{
                   root: { className: "w-full" },
                 }}
@@ -55,7 +47,9 @@ const Login = () => {
             <span className="p-input-icon-left w-full">
               <Password
                 placeholder="Password"
+                name="password"
                 value={auth.password}
+                onChange={(e) => getData(e)}
                 pt={{
                   root: { className: "w-full" },
                   input: { className: "w-full pl-5" },
@@ -69,6 +63,7 @@ const Login = () => {
           <Button
             label="Log in"
             severity="secondary"
+            onClick={login}
             pt={{
               root: { className: "p-2 w-full bg-gray-600 border-round-sm" },
             }}
