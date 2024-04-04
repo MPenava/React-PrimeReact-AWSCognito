@@ -1,4 +1,4 @@
-import { register } from "helpers";
+import { register } from "../../../helpers";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
@@ -52,14 +52,16 @@ const Register = () => {
               />
             </span>
           </div>
-          <div className="flex flex-column w-full gap-2">
+          <div className="flex flex-column gap-2">
             <label className="text-sm">Password</label>
-            <span className="p-input-icon-left w-full">
+            <span className="p-input-icon-left">
               <Password
                 name="password"
                 value={auth.password}
                 onChange={(e) => getData(e)}
                 placeholder="Password"
+                feedback={false}
+                toggleMask
                 pt={{
                   root: { className: "w-full" },
                   input: { className: "w-full pl-5" },

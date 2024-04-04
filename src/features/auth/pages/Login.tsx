@@ -51,6 +51,8 @@ const Login = () => {
                 name="password"
                 value={auth.password}
                 onChange={(e) => getData(e)}
+                feedback={false}
+                toggleMask
                 pt={{
                   root: { className: "w-full" },
                   input: { className: "w-full pl-5" },
