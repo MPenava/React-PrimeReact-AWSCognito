@@ -1,4 +1,4 @@
-import { register } from "../../../helpers";
+import { signUp } from "../../../helpers";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
@@ -24,7 +24,7 @@ const Register = () => {
 
   const handleRegisterForm = async () => {
     const username = auth.email.split("@")[0];
-    register(username, auth.email, auth.password, auth.phone).then((data) => {
+    signUp(username, auth.email, auth.password, auth.phone).then((data) => {
       console.log("SUCCESS");
       console.log(data);
     });
