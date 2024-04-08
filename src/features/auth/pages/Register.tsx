@@ -1,4 +1,4 @@
-import { signUp } from "../../../helpers";
+import { useAuth } from "../../../providers/context/AuthContext";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
@@ -6,6 +6,8 @@ import { useState } from "react";
 import { TAuthRegisterType } from "../types";
 
 const Register = () => {
+  const { signUp } = useAuth();
+
   const [auth, setAuth] = useState<TAuthRegisterType>({
     email: "",
     password: "",
@@ -24,10 +26,8 @@ const Register = () => {
 
   const handleRegisterForm = async () => {
     const username = auth.email.split("@")[0];
-    signUp(username, auth.email, auth.password, auth.phone).then((data) => {
-      console.log("SUCCESS");
-      console.log(data);
-    });
+    signUp(username, auth.email, auth.password, auth.phone);
+
   };
 
   return (
