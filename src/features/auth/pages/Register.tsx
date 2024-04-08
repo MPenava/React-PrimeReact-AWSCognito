@@ -27,6 +27,7 @@ const Register = () => {
   const handleRegisterForm = async () => {
     const username = auth.email.split("@")[0];
     signUp(username, auth.email, auth.password, auth.phone);
+
   };
 
   return (
