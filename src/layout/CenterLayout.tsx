@@ -1,5 +1,5 @@
 import { Image } from "primereact/image";
-import imageSrc from "../assets/manitoba_logo.png";
+import imageSrc from "../assets/manitoba.png";
 import mainitobaBackground from "../assets/manitoba_background.png";
 import { AuthContent } from "./components/content";
 

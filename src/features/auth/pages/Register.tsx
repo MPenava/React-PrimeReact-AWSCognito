@@ -4,9 +4,11 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { useState } from "react";
 import { TAuthRegisterType } from "../types";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { signUp } = useAuth();
+  const navigate = useNavigate();
 
   const [auth, setAuth] = useState<TAuthRegisterType>({
     email: "",
@@ -25,9 +27,11 @@ const Register = () => {
   };
 
   const handleRegisterForm = async () => {
-    const username = auth.email.split("@")[0];
-    signUp(username, auth.email, auth.password, auth.phone);
-
+    const username = auth.email;
+    signUp(username, auth.email, auth.password, auth.phone).then((data) => {
+      console.log(data);
+      navigate("/access-code");
+    });
   };
 
   return (

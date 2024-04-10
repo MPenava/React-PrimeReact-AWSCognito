@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { setCookie } from "../../helpers/cookies.helpers";
 import {
   AuthenticationDetails,
   CognitoUserPool,
@@ -8,13 +9,16 @@ import {
 
 type TAuthContext = {
   currentUser: CognitoUser | null;
-  signIn: (email: string, password: string) => void;
+  signIn: (email: string, password: string) => Promise<void>;
   signUp: (
     username: string,
     email: string,
     password: string,
     phone: string
-  ) => void;
+  ) => Promise<void>;
+  signOut: () => Promise<void>;
+  getSession: () => Promise<void>;
+  confirmRegistration: (username: string, code: string) => Promise<void>;
 };
 
 type TAuthContextProps = {
@@ -36,30 +40,59 @@ const poolData = {
   ClientId: import.meta.env.VITE_COGNITO_CLIENT_ID,
 };
 
-//const userpool = new CognitoUserPool(poolData);
-const userpool = {} as never;
+const userpool = new CognitoUserPool(poolData);
+//const userpool = {} as never;
 
 const AuthContext = ({ children }: TAuthContextProps) => {
   const [currentUser, setCurrentUser] = useState<CognitoUser | null>(null);
 
   const signIn = (email: string, password: string) => {
-    const user = new CognitoUser({
-      Username: email,
-      Pool: userpool,
-    });
+    return new Promise<void>((resolve, reject) => {
+      const user = new CognitoUser({
+        Username: email,
+        Pool: userpool,
+      });
 
-    const authDetails = new AuthenticationDetails({
-      Username: email,
-      Password: password,
-    });
+      const authDetails = new AuthenticationDetails({
+        Username: email,
+        Password: password,
+      });
 
-    user.authenticateUser(authDetails, {
-      onSuccess: (result) => {
-        console.log(result);
-      },
-      onFailure: (err) => {
-        console.log(err);
-      },
+      user.authenticateUser(authDetails, {
+        onSuccess: (result) => {
+          console.log("signIn");
+          const cognitoUser = result;
+          setCookie(
+            "refresh_token",
+            cognitoUser.getIdToken().getJwtToken(),
+            "persistent"
+          );
+          setCookie(
+            "access_token",
+            cognitoUser.getIdToken().getJwtToken(),
+            "persistent"
+          );
+          resolve();
+        },
+        onFailure: (error) => {
+          console.error("Sign-in error:", error);
+          reject(error);
+        },
+        mfaRequired: (challengeName) => {
+          console.log("MFA required:", challengeName);
+          user.sendMFACode("123456", {
+            onSuccess: () => {
+              console.log("MFA");
+              console.log("MFA code sent successfully");
+              resolve();
+            },
+            onFailure: (err) => {
+              console.error("Failed to send MFA code:", err);
+              reject(err);
+            },
+          });
+        },
+      });
     });
   };
 
@@ -69,7 +102,7 @@ const AuthContext = ({ children }: TAuthContextProps) => {
     password: string,
     phone: string
   ) => {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       const attributeList = [];
 
       const attributeEmail = new CognitoUserAttribute({
@@ -91,11 +124,9 @@ const AuthContext = ({ children }: TAuthContextProps) => {
         } else {
           if (result) {
             const cognitoUser = result.user;
-            resolve(
-              "User signed up successfully. Username: " +
-                cognitoUser.getUsername()
-            );
+            resolve();
             setCurrentUser(cognitoUser);
+            return cognitoUser;
           } else {
             reject("User sign up result is undefined.");
           }
@@ -103,8 +134,62 @@ const AuthContext = ({ children }: TAuthContextProps) => {
       });
     });
   };
+
+  const confirmRegistration = (username: string, code: string) => {
+    return new Promise<void>((resolve, reject) => {
+      const user = new CognitoUser({
+        Username: username,
+        Pool: userpool,
+      });
+      user.confirmRegistration(code, true, (err, result) => {
+        if (err) {
+          reject(err.message || JSON.stringify(err));
+        } else {
+          resolve();
+          console.log("call result: " + result);
+        }
+      });
+    });
+  };
+
+  const getSession = async () => {
+    return await new Promise<void>((resolve, reject) => {
+      const user = userpool.getCurrentUser();
+      if (user) {
+        user.getSession((err: any, session: any) => {
+          if (err) {
+            reject();
+          } else {
+            resolve(session);
+            console.log(session);
+          }
+        });
+      } else {
+        reject();
+      }
+    });
+  };
+
+  const signOut = async () => {
+    const user = userpool.getCurrentUser();
+    if (user) {
+      user.signOut();
+      console.log("SignOut");
+    }
+    setCurrentUser(null);
+  };
+
   return (
-    <CognitoAuthContext.Provider value={{ currentUser, signIn, signUp }}>
+    <CognitoAuthContext.Provider
+      value={{
+        currentUser,
+        signIn,
+        signUp,
+        signOut,
+        confirmRegistration,
+        getSession,
+      }}
+    >
       {children}
     </CognitoAuthContext.Provider>
   );

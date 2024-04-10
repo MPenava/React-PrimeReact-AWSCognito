@@ -5,13 +5,24 @@ import AdminDashboard from "../features/admin/pages/AdminDashboard";
 import Login from "../features/auth/pages/Login";
 import AccessCode from "../features/auth/pages/AccessCode";
 import Register from "../features/auth/pages/Register";
-
+import ResetPassword from "../features/auth/pages/ResetPassword";
+import CognitoAuth from "../features/auth/pages/CognitoAuth";
 import { MainLayout } from "../layout";
 import { CenterLayout } from "../layout";
 
 export const routes = [
   {
     path: "/",
+    element: <CenterLayout />,
+    children: [
+      {
+        path: "",
+        element: <CognitoAuth />,
+      },
+    ],
+  },
+  {
+    path: "/login",
     element: <CenterLayout />,
     children: [
       {
@@ -27,6 +38,16 @@ export const routes = [
       {
         path: "",
         element: <AccessCode />,
+      },
+    ],
+  },
+  {
+    path: "/reset-password",
+    element: <CenterLayout />,
+    children: [
+      {
+        path: "",
+        element: <ResetPassword />,
       },
     ],
   },

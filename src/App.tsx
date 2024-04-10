@@ -6,7 +6,7 @@ function App() {
   return (
     <AuthContext>
       <>
-        <Router />;
+        <Router />
       </>
     </AuthContext>
   );

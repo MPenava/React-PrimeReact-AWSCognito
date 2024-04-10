@@ -1,44 +1,41 @@
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import { useAuth } from "../../../providers/context/AuthContext";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
-const AccessCode = () => {
-  const { getSession, signOut } = useAuth();
-  const [code, setCode] = useState<string>("");
+const ResetPassword = () => {
+  const [email, setEmail] = useState<string>("");
 
   const getData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCode(e.target.value);
+    setEmail(e.target.value);
   };
 
   const handleSubmit = () => {
-    //confirmRegistration(currentUser, code);
-    getSession();
+    console.log("Reset..");
   };
 
-  const logout = () => {
-    signOut();
-  };
   return (
     <div className="flex flex-column w-23rem p-4 gap-4 bg-white border-round-lg shadow-5">
       <div className="flex flex-column gap-4">
         <div className="flex justify-content-center text-4xl font-normal">
-          Enter 6-digit code
+          Reset your password
         </div>
         <div className="flex flex-column justify-content-center align-items-center text-xs font-normal">
-          <span>Please enter 6-digit code sent to your email</span>
-          <span>example@gmail.com</span>
+          <span>
+            Enter your email, and we will send you the link to reset your
+            password.
+          </span>
         </div>
       </div>
       <div className="flex flex-column gap-5">
         <div className="flex flex-row justify-content-center">
-          <span className="p-input-icon-left w-10rem">
-            <i className="pi pi-clone" />
+          <span className="p-input-icon-left w-full">
+            <i className="pi pi-envelope" />
             <InputText
-              placeholder="Code"
-              name="code"
-              value={code}
-              onChange={getData}
+              placeholder="Email"
+              name="email"
+              value={email}
+              onChange={(e) => getData(e)}
               pt={{
                 root: { className: "w-full" },
               }}
@@ -54,22 +51,15 @@ const AccessCode = () => {
             }}
             onClick={handleSubmit}
           ></Button>
-          <div className="flex justify-content-center px-4 py-2 font-semibold">
-            Resend code
+          <div className="flex justify-content-center px-4 py-2 font-normal text-sm">
+            <Link to="/" className="no-underline text-sm font-medium">
+              Return to log in
+            </Link>
           </div>
-
-          <Button
-            label="Logout"
-            severity="secondary"
-            pt={{
-              root: { className: "p-2 w-full bg-gray-600 border-round-sm" },
-            }}
-            onClick={logout}
-          ></Button>
         </div>
       </div>
     </div>
   );
 };
 
-export default AccessCode;
+export default ResetPassword;

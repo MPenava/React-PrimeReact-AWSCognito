@@ -4,8 +4,10 @@ import { Password } from "primereact/password";
 import { useState } from "react";
 import { TAuthType } from "../types";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../../providers/context/AuthContext";
 
 const Login = () => {
+  const { signIn } = useAuth();
   const [auth, setAuth] = useState<TAuthType>({ email: "", password: "" });
 
   const getData = (e: any) => {
@@ -19,7 +21,7 @@ const Login = () => {
   };
 
   const login = () => {
-    console.log(auth);
+    signIn(auth.email, auth.password);
   };
   return (
     <div className="flex flex-column w-23rem p-4 gap-4 bg-white border-round-lg shadow-5">
