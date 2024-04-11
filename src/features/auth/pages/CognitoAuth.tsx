@@ -5,15 +5,15 @@ const CognitoAuth = () => {
   const navigate = useNavigate();
 
   const handleSignIn = () => {
-    window.location.replace(
-      "https://primereact-example.auth.eu-north-1.amazoncognito.com/login?client_id=5575h78s6q60tlvv8gmjvfvqiu&response_type=code&scope=email+openid+phone&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fadmin"
-    );
+    window.location.replace(import.meta.env.VITE_COGNITO_LOGIN_URL);
   };
 
   const handleSignUp = () => {
-    window.location.replace(
-      "https://primereact-example.auth.eu-north-1.amazoncognito.com/signup?client_id=5575h78s6q60tlvv8gmjvfvqiu&response_type=code&scope=email+openid+phone&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fadmin"
-    );
+    window.location.replace(import.meta.env.VITE_COGNITO_SIGNUP_URL);
+  };
+
+  const handleSignOut = () => {
+    window.location.replace(import.meta.env.VITE_COGNITO_LOGOUT_URL);
   };
 
   const handleLoginForm = () => {
@@ -21,7 +21,7 @@ const CognitoAuth = () => {
   };
   return (
     <div className="flex flex-column w-23rem p-4 gap-4 bg-white border-round-lg shadow-5">
-      <div className="flex justify-content-center text-4xl font-normal">
+      <div className="flex justify-content-center text-2xl font-normal">
         Cognito Auth
       </div>
       <div className="flex flex-column">
@@ -39,7 +39,15 @@ const CognitoAuth = () => {
             severity="secondary"
             onClick={handleSignUp}
             pt={{
-              root: { className: "p-2 w-full bg-gray-600 border-round-sm" },
+              root: { className: "p-2 w-full bg-yellow-700 border-round-sm" },
+            }}
+          ></Button>
+          <Button
+            label="Sign Out"
+            severity="secondary"
+            onClick={handleSignOut}
+            pt={{
+              root: { className: "p-2 w-full bg-green-700 border-round-sm" },
             }}
           ></Button>
           <Button

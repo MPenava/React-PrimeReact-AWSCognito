@@ -3,12 +3,17 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { useState } from "react";
 import { TAuthType } from "../types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../providers/context/AuthContext";
+import { Toast } from "../../../shared/components/toast/Toast";
 
 const Login = () => {
+  const navigate = useNavigate();
   const { signIn } = useAuth();
+
   const [auth, setAuth] = useState<TAuthType>({ email: "", password: "" });
+  const [isError, setError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const getData = (e: any) => {
     const { value, name } = e.target;
@@ -20,9 +25,17 @@ const Login = () => {
     });
   };
 
-  const login = () => {
-    signIn(auth.email, auth.password);
+  const login = async () => {
+    try {
+      await signIn(auth.email, auth.password);
+      navigate("/admin");
+    } catch (error) {
+      setError(true);
+      setErrorMessage("Something went wrong!!");
+      console.log(error);
+    }
   };
+
   return (
     <div className="flex flex-column w-23rem p-4 gap-4 bg-white border-round-lg shadow-5">
       <div className="flex justify-content-center text-4xl font-normal">
@@ -84,6 +97,9 @@ const Login = () => {
           </div>
         </div>
       </div>
+      {isError && (
+        <Toast severity="error" summary="Error" detail={errorMessage} />
+      )}
     </div>
   );
 };

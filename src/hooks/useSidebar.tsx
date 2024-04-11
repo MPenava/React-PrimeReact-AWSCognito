@@ -4,9 +4,6 @@ const listItems: MenuItem[] = [
   {
     label: "DASHBOARD",
     icon: "pi pi-th-large",
-    command: () => {
-      console.log("click");
-    },
   },
   {
     label: "READY TO SENT",
@@ -30,6 +27,9 @@ const actionItems: MenuItem[] = [
   {
     label: "LOGOUT",
     icon: "pi pi-sign-out",
+    command: () => {
+      window.location.replace(import.meta.env.VITE_COGNITO_LOGOUT_URL);
+    },
   },
 ];
 

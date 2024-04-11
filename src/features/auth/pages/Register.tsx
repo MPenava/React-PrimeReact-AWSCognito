@@ -28,10 +28,12 @@ const Register = () => {
 
   const handleRegisterForm = async () => {
     const username = auth.email;
-    signUp(username, auth.email, auth.password, auth.phone).then((data) => {
-      console.log(data);
+    try {
+      await signUp(username, auth.email, auth.password, auth.phone);
       navigate("/access-code");
-    });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
