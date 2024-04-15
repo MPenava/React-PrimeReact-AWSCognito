@@ -74,7 +74,7 @@ export const routes = [
 ];
 
 const router = createBrowserRouter(routes, {
-  basename: import.meta.env.VITE_APP_BASENAME || "",
+  basename: "",
 });
 
 const Router = () => (
