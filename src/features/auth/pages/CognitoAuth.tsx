@@ -7,13 +7,10 @@ const CognitoAuth = () => {
   const handleSignIn = () => {
     window.location.replace(import.meta.env.VITE_COGNITO_LOGIN_URL);
   };
-
-  const handleSignUp = () => {
-    window.location.replace(import.meta.env.VITE_COGNITO_SIGNUP_URL);
-  };
-
-  const handleSignOut = () => {
-    window.location.replace(import.meta.env.VITE_COGNITO_LOGOUT_URL);
+  const handleImplicitLoginForm = () => {
+    window.location.replace(
+      import.meta.env.VITE_COGNITO_IMPLICIT_AUTH_LOGIN_URL
+    );
   };
 
   const handleLoginForm = () => {
@@ -35,19 +32,11 @@ const CognitoAuth = () => {
             }}
           ></Button>
           <Button
-            label="Sign Up"
+            label="Sign In - Implicit"
             severity="secondary"
-            onClick={handleSignUp}
+            onClick={handleImplicitLoginForm}
             pt={{
-              root: { className: "p-2 w-full bg-yellow-700 border-round-sm" },
-            }}
-          ></Button>
-          <Button
-            label="Sign Out"
-            severity="secondary"
-            onClick={handleSignOut}
-            pt={{
-              root: { className: "p-2 w-full bg-green-700 border-round-sm" },
+              root: { className: "p-2 w-full bg-green-800 border-round-sm" },
             }}
           ></Button>
           <Button

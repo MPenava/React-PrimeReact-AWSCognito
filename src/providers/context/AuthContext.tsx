@@ -1,15 +1,16 @@
 import { createContext, useContext, useState } from "react";
-import { setCookie } from "../../helpers/cookies.helpers";
 import {
   AuthenticationDetails,
   CognitoUserPool,
   CognitoUser,
   CognitoUserAttribute,
+  CookieStorage,
 } from "amazon-cognito-identity-js";
 
 type TAuthContext = {
   currentUser: CognitoUser | null;
   signIn: (email: string, password: string) => Promise<void>;
+  sendMFACode: (email: string, code: string) => Promise<void>;
   signUp: (
     username: string,
     email: string,
@@ -17,7 +18,7 @@ type TAuthContext = {
     phone: string
   ) => Promise<void>;
   signOut: () => Promise<void>;
-  getSession: () => Promise<void>;
+  getCurrentUser: () => Promise<void>;
   confirmRegistration: (username: string, code: string) => Promise<void>;
 };
 
@@ -38,6 +39,7 @@ export const useAuth = () => {
 const poolData = {
   UserPoolId: import.meta.env.VITE_COGNITO_USER_POOL_ID,
   ClientId: import.meta.env.VITE_COGNITO_CLIENT_ID,
+  Storage: new CookieStorage({ domain: "localhost" }),
 };
 
 const userpool = new CognitoUserPool(poolData);
@@ -51,6 +53,7 @@ const AuthContext = ({ children }: TAuthContextProps) => {
       const user = new CognitoUser({
         Username: email,
         Pool: userpool,
+        Storage: new CookieStorage({ domain: "localhost" }),
       });
 
       const authDetails = new AuthenticationDetails({
@@ -60,39 +63,58 @@ const AuthContext = ({ children }: TAuthContextProps) => {
 
       user.authenticateUser(authDetails, {
         onSuccess: (result) => {
-          console.log("signIn");
-          const cognitoUser = result;
-          setCookie(
-            "refresh_token",
-            cognitoUser.getIdToken().getJwtToken(),
-            "persistent"
-          );
-          setCookie(
-            "access_token",
-            cognitoUser.getIdToken().getJwtToken(),
-            "persistent"
-          );
+          console.log(result);
           resolve();
         },
         onFailure: (error) => {
           console.error("Sign-in error:", error);
           reject(error);
         },
-        mfaRequired: (challengeName) => {
-          console.log("MFA required:", challengeName);
-          user.sendMFACode("123456", {
-            onSuccess: () => {
-              console.log("MFA");
-              console.log("MFA code sent successfully");
-              resolve();
+        totpRequired: () => {
+          const challengeAnswer = "124752";
+          user.sendMFACode(
+            challengeAnswer,
+            {
+              onSuccess: (result) => {
+                console.log("totp");
+                const cognitoUser = result;
+                console.log(cognitoUser);
+                resolve();
+              },
+              onFailure: (error) => {
+                console.error("MFA totp:", error);
+                reject(error);
+              },
             },
-            onFailure: (err) => {
-              console.error("Failed to send MFA code:", err);
-              reject(err);
-            },
-          });
+            "SOFTWARE_TOKEN_MFA"
+          );
         },
       });
+    });
+  };
+
+  const sendMFACode = async (username: string, code: string) => {
+    const userData = {
+      Username: username,
+      Pool: userpool,
+    };
+
+    const cognitoUser = new CognitoUser(userData);
+    console.log(cognitoUser);
+
+    return new Promise<void>((resolve, reject) => {
+      cognitoUser.sendMFACode(
+        code,
+        {
+          onSuccess: () => {
+            resolve();
+          },
+          onFailure: (err) => {
+            reject(err);
+          },
+        },
+        "SOFTWARE_TOKEN_MFA"
+      );
     });
   };
 
@@ -152,7 +174,7 @@ const AuthContext = ({ children }: TAuthContextProps) => {
     });
   };
 
-  const getSession = async () => {
+  const getCurrentUser = async () => {
     return await new Promise<void>((resolve, reject) => {
       const user = userpool.getCurrentUser();
       if (user) {
@@ -183,11 +205,12 @@ const AuthContext = ({ children }: TAuthContextProps) => {
     <CognitoAuthContext.Provider
       value={{
         currentUser,
+        sendMFACode,
         signIn,
         signUp,
         signOut,
         confirmRegistration,
-        getSession,
+        getCurrentUser,
       }}
     >
       {children}

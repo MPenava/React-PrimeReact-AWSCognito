@@ -28,7 +28,7 @@ const Login = () => {
   const login = async () => {
     try {
       await signIn(auth.email, auth.password);
-      navigate("/admin");
+      navigate("/access-code");
     } catch (error) {
       setError(true);
       setErrorMessage("Something went wrong!!");
