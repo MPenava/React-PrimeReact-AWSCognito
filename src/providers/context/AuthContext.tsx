@@ -71,7 +71,8 @@ const AuthContext = ({ children }: TAuthContextProps) => {
           reject(error);
         },
         totpRequired: () => {
-          const challengeAnswer = "124752";
+          resolve();
+          /* const challengeAnswer = "xxxxxx";
           user.sendMFACode(
             challengeAnswer,
             {
@@ -87,7 +88,7 @@ const AuthContext = ({ children }: TAuthContextProps) => {
               },
             },
             "SOFTWARE_TOKEN_MFA"
-          );
+          ); */
         },
       });
     });
