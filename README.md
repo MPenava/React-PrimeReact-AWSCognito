@@ -1,4 +1,4 @@
-# React + PrimeReact (styled mode)
+# React + PrimeReact (styled mode) + amazon-cognito-identity-js
 
 ## Setup for styled mode
 
