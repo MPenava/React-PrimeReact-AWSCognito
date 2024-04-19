@@ -1,51 +1,17 @@
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Question, Notes } from "../types";
+import { questionaries, notes } from "../hooks";
 
 import { Tag } from "primereact/tag";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
+import { useAuth } from "../../../providers/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
-  const questionaries: Question[] = [
-    {
-      name: "annasmith_q1",
-      date: "Dec-30-2023 10:35",
-    },
-    {
-      name: "annasmith_q1",
-      date: "Dec-30-2023 10:35",
-    },
-    {
-      name: "annasmith_q1",
-      date: "Dec-30-2023 10:35",
-    },
-  ];
-
-  const notes: Notes[] = [
-    {
-      name: "Rusell, Dianne",
-      date: "Dec-30-2023 10:35",
-    },
-    {
-      name: "Rusell, Dianne",
-      date: "Dec-30-2023 10:35",
-    },
-    {
-      name: "Rusell, Dianne",
-      date: "Dec-30-2023 10:35",
-    },
-    {
-      name: "Rusell, Dianne",
-      date: "Dec-30-2023 10:35",
-    },
-    {
-      name: "Rusell, Dianne",
-      date: "Dec-30-2023 10:35",
-    },
-  ];
-
+  const { signOut } = useAuth();
+  const navigate = useNavigate();
   const viewIcon = () => {
     return (
       <Button
@@ -75,12 +41,13 @@ const AdminDashboard = () => {
 
   const toast = useRef<Toast>(null);
 
-  const handleClickEvent = () => {
-    toast.current?.show({
-      severity: "success",
-      summary: "Success",
-      detail: "Message Content",
-    });
+  const handleLogoutEvent = async () => {
+    try {
+      await signOut();
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -98,22 +65,16 @@ const AdminDashboard = () => {
             }}
           />
           <Button
-            icon="pi pi-plus"
-            label="New questionare"
+            icon="pi pi-sign-out"
+            label="Logout"
             severity="secondary"
-            onClick={handleClickEvent}
-          ></Button>
-          <Button
-            icon="pi pi-plus"
-            label="New script"
-            severity="secondary"
-            onClick={handleClickEvent}
+            onClick={handleLogoutEvent}
           ></Button>
         </div>
       </div>
 
-      <div className="flex flex-row justify-content-between">
-        <div className="card flex p-4 gap-3 bg-gray-100 border-round-xl">
+      <div className="flex flex-row flex-wrap justify-content-between">
+        <div className="card flex p-4 gap-3 bg-gray-100 border-round-xl m-2">
           <div className="flex align-items-center text-lg font-semibold">
             Completed questionaries
           </div>
@@ -121,7 +82,7 @@ const AdminDashboard = () => {
             145
           </div>
         </div>
-        <div className="card flex p-4 gap-3 bg-gray-100 border-round-xl">
+        <div className="card flex p-4 gap-3 bg-gray-100 border-round-xl m-2">
           <div className="flex align-items-center text-lg font-semibold">
             Not submited questionaries
           </div>
@@ -129,7 +90,7 @@ const AdminDashboard = () => {
             20
           </div>
         </div>
-        <div className="card flex p-4 gap-3 bg-gray-100 border-round-xl">
+        <div className="card flex p-4 gap-3 bg-gray-100 border-round-xl m-2">
           <div className="flex align-items-center text-lg font-semibold">
             Incomplete questionarires
           </div>

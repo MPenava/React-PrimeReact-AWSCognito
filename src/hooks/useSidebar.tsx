@@ -24,13 +24,6 @@ const actionItems: MenuItem[] = [
     label: "SETTINGS",
     icon: "pi pi-cog",
   },
-  {
-    label: "LOGOUT",
-    icon: "pi pi-sign-out",
-    command: () => {
-      window.location.replace(import.meta.env.VITE_COGNITO_LOGOUT_URL);
-    },
-  },
 ];
 
 export { listItems, actionItems };
