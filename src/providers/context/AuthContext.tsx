@@ -9,7 +9,7 @@ import {
 
 type TAuthContext = {
   currentUser: CognitoUser | null;
-  signIn: (email: string, password: string) => Promise<void>;
+  signIn: (email: string, password: string, code: string) => Promise<void>;
   sendMFACode: (email: string, code: string) => Promise<void>;
   signUp: (
     username: string,
@@ -48,7 +48,7 @@ const userpool = new CognitoUserPool(poolData);
 const AuthContext = ({ children }: TAuthContextProps) => {
   const [currentUser, setCurrentUser] = useState<CognitoUser | null>(null);
 
-  const signIn = (email: string, password: string) => {
+  const signIn = (email: string, password: string, code: string) => {
     return new Promise<void>((resolve, reject) => {
       const user = new CognitoUser({
         Username: email,
@@ -71,15 +71,12 @@ const AuthContext = ({ children }: TAuthContextProps) => {
           reject(error);
         },
         totpRequired: () => {
-          resolve();
-          /* const challengeAnswer = "xxxxxx";
           user.sendMFACode(
-            challengeAnswer,
+            code,
             {
               onSuccess: (result) => {
-                console.log("totp");
                 const cognitoUser = result;
-                console.log(cognitoUser);
+                console.log(result);
                 resolve();
               },
               onFailure: (error) => {
@@ -88,7 +85,7 @@ const AuthContext = ({ children }: TAuthContextProps) => {
               },
             },
             "SOFTWARE_TOKEN_MFA"
-          ); */
+          );
         },
       });
     });

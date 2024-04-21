@@ -1,6 +1,7 @@
 type TAuthType = {
   email: string;
   password: string;
+  code: string;
 };
 
 type TAuthRegisterType = {

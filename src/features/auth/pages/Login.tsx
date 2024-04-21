@@ -11,7 +11,11 @@ const Login = () => {
   const navigate = useNavigate();
   const { signIn } = useAuth();
 
-  const [auth, setAuth] = useState<TAuthType>({ email: "", password: "" });
+  const [auth, setAuth] = useState<TAuthType>({
+    email: "",
+    password: "",
+    code: "",
+  });
   const [isError, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
@@ -27,8 +31,8 @@ const Login = () => {
 
   const login = async () => {
     try {
-      await signIn(auth.email, auth.password);
-      navigate("/access-code");
+      await signIn(auth.email, auth.password, auth.code);
+      navigate("/admin");
     } catch (error) {
       setError(true);
       setErrorMessage("Something went wrong!!");
@@ -74,6 +78,21 @@ const Login = () => {
                 }}
               />
               <i className="pi pi-lock" />
+            </span>
+          </div>
+          <div className="flex flex-column gap-2">
+            <label className="text-sm">Code</label>
+            <span className="p-input-icon-left">
+              <i className="pi pi-envelope" />
+              <InputText
+                placeholder="Code"
+                name="code"
+                value={auth.code}
+                onChange={(e) => getData(e)}
+                pt={{
+                  root: { className: "w-full" },
+                }}
+              />
             </span>
           </div>
         </div>
