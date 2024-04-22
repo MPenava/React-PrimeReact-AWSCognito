@@ -76,7 +76,7 @@ const AuthContext = ({ children }: TAuthContextProps) => {
             {
               onSuccess: (result) => {
                 const cognitoUser = result;
-                console.log(result);
+                console.log(cognitoUser);
                 resolve();
               },
               onFailure: (error) => {
